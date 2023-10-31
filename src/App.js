@@ -11,14 +11,17 @@ function App() {
     setitems(items => [...items, newitem])
 
   }
-  function deletteItem(id){
-setitems(items=>items.filter(item=>item.id!=id))
+  function modifyitem(id) {
+    setitems(items => items.map(item => item.id === id ?{...item,packed:!item.packed} :item))
+  }
+  function deletteItem(id) {
+    setitems(items => items.filter(item => item.id != id))
   }
   return (
     <div className='App'>
       <Header />
       <Form onhandleadd={handleadd} />
-      <PackingList item={items} ondeleteitem={deletteItem} />
+      <PackingList item={items} ondeleteitem={deletteItem} onmodify={modifyitem} />
       <Stats />
     </div>
   )
@@ -42,30 +45,32 @@ function Header() {
 
   )
 }
-function PackingList({item,ondeleteitem}) {
+function PackingList({ item, ondeleteitem, onmodify }) {
   return <ul className='list'>
     {
       item.map(i =>
 
-        <Item item={i} key={i.id}  ondeleteitem={ondeleteitem}/>)
+        <Item item={i} key={i.id} ondeleteitem={ondeleteitem} onmodify={onmodify} />)
     }
   </ul>
 }
-function Item({ item,ondeleteitem }) {
+function Item({ item, ondeleteitem,onmodify }) {
 
   return (
+
     <li>
-      <span style={!item.packed ? {} : { textDecoration: "line-through", color: 'black' }}>   {item.quantity} {item.description}  
-      <button onClick={()=>ondeleteitem(item.id)}>❌</button> </span>
-     
+      <input type='checkbox' value={item.packed} onChange={()=>onmodify(item.id)} />
+      <span style={!item.packed ? {} : { textDecoration: "line-through", color: 'black' }}>   {item.quantity} {item.description}
+        <button onClick={() => ondeleteitem(item.id)}>❌</button> </span>
+
     </li>
   )
 }
-function Form({onhandleadd}) {
+function Form({ onhandleadd }) {
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState(3);
- 
- 
+
+
 
   function handleSubmit(e) {
     e.preventDefault();
