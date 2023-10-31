@@ -11,11 +11,14 @@ function App() {
     setitems(items => [...items, newitem])
 
   }
+  function deletteItem(id){
+setitems(items=>items.filter(item=>item.id!=id))
+  }
   return (
     <div className='App'>
       <Header />
       <Form onhandleadd={handleadd} />
-      <PackingList item={items} />
+      <PackingList item={items} ondeleteitem={deletteItem} />
       <Stats />
     </div>
   )
@@ -39,21 +42,21 @@ function Header() {
 
   )
 }
-function PackingList({item}) {
+function PackingList({item,ondeleteitem}) {
   return <ul className='list'>
     {
       item.map(i =>
 
-        <Item item={i} key={i.id} />)
+        <Item item={i} key={i.id}  ondeleteitem={ondeleteitem}/>)
     }
   </ul>
 }
-function Item({ item }) {
+function Item({ item,ondeleteitem }) {
 
   return (
     <li>
       <span style={!item.packed ? {} : { textDecoration: "line-through", color: 'black' }}>   {item.quantity} {item.description}  
-      <button>❌</button> </span>
+      <button onClick={()=>ondeleteitem(item.id)}>❌</button> </span>
      
     </li>
   )
