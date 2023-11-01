@@ -65,7 +65,7 @@ function PackingList({ item, ondeleteitem, onmodify ,clearall }) {
   if (sortby==='input') sorteditems= item;
   //⬇ ce code dessus non travaille
    if (sortby ==='description') sorteditems = item.slice().sort((a,b)=>a.description.localCompare(b.description)); //trier par nom alphabetic   // la fonction sort() en js est une fonction qui change au list , donc on cree une copie de notre liste  pour la trier la meme list copie on utilise on "mapping" donc on map a la liste trie
-if (sortby==="packed") sorteditems=item.slice().sort((a,b)=>Number(a.packed)-Number(b.packed)); // je dois revisiter section de eviser sur le course pour la fonctin sort reduce ...
+//(not working)if (sortby==="packed") sorteditems=item.slice().sort((a,b)=>Number(a.packed)-Number(b.packed)); // je dois revisiter section de eviser sur le course pour la fonctin sort reduce ...
 // la function sort contenir 2 variable a , b et les compare par la soustraction
   
   return <div className='list'>
