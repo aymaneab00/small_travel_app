@@ -21,6 +21,8 @@ function clearall (){
   function deletteItem(id) {
     setitems(items => items.filter(item => item.id !== id))
   }
+
+
   return (
     <div className='App'>
       <Header />
@@ -63,11 +65,14 @@ function PackingList({ item, ondeleteitem, onmodify ,clearall }) {
   const [sortby,setsortby]=useState('input')
   let sorteditems;
   if (sortby==='input') sorteditems= item;
-  //⬇ ce code dessus non travaille
-   if (sortby ==='description') sorteditems = item.slice().sort((a,b)=>a.description.localCompare(b.description)); //trier par nom alphabetic   // la fonction sort() en js est une fonction qui change au list , donc on cree une copie de notre liste  pour la trier la meme list copie on utilise on "mapping" donc on map a la liste trie
-//(not working)if (sortby==="packed") sorteditems=item.slice().sort((a,b)=>Number(a.packed)-Number(b.packed)); // je dois revisiter section de eviser sur le course pour la fonctin sort reduce ...
+
+  //⬇ ce code travaille
+  // l error est que la methode localecompare j oublie 'e' 
+   if (sortby ==='description') sorteditems = item.slice().sort((a,b)=>a.description.localeCompare(b.description)); //trier par nom alphabetic   // la fonction sort() en js est une fonction qui change au list , donc on cree une copie de notre liste  pour la trier la meme list copie on utilise on "mapping" donc on map a la liste trie
+   console.log("test sorteditems array", sorteditems);
+   //work⬇
+if (sortby==="packed") sorteditems=item.slice().sort((a,b)=>Number(a.packed)-Number(b.packed)); // je dois revisiter section de Reviser sur le course pour la fonctin sort reduce ...
 // la function sort contenir 2 variable a , b et les compare par la soustraction
-  
   return <div className='list'>
    <ul>
 
